@@ -73,7 +73,7 @@ def plot_topics(topic_model, topic_ids):
 
 def standardise_date(date_str):
 
-    '''Standardizes date format from various formats to 'DD-MM-YYYY'.
+    '''Standardises date format from various formats to 'DD-MM-YYYY'.
     (source: https://www.ionos.co.uk/digitalguide/websites/web-development/convert-strings-to-datetime-in-python/)'''
     
     # Remove the hours using regex
