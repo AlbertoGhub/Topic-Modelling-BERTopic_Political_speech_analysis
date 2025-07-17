@@ -1,99 +1,73 @@
+# Topic Modelling with BERTopic: Political Speech Analysis
 
+## Overview
 
+Topic modelling with BERTopic represents a state-of-the-art, transformer-based method for uncovering meaningful themes within large text corpora, such as political speeches or financial news. Unlike classical approaches like Latent Dirichlet Allocation (LDA), which rely on the bag-of-words assumption and often fail to capture semantic relationships between words, BERTopic leverages pre-trained language models to produce semantically rich embeddings. These embeddings are subsequently reduced in dimensionality and clustered to form coherent, interpretable topics. This embedding-based approach consistently outperforms many traditional and modern topic models across diverse datasets and domains.
 
+### BERTopic's architecture consists of six modular components:
 
+1. **Embeddings:** Transform text into semantic vector representations using sentence-transformer models.
+2. **Dimensionality Reduction:** Compress high-dimensional embeddings into a lower-dimensional space (using techniques like UMAP or PCA) while preserving relationships.
+3. **Clustering:** Group similar documents into distinct topics using algorithms such as HDBSCAN or K-Means.
+4. **Vectorizers:** Convert text into numerical features for topic analysis, e.g., count vectorizer or online vectorizer.
+5. **c-TF-IDF:** Compute term importance scores within and across topics to identify key terms.
+6. **Representation Model:** Use semantic similarity between candidate keywords and document embeddings to select the most representative topic keywords, sometimes leveraging LLMs or KeyBERT.
 
+This modular design allows flexible customisation tailored to different use cases such as survey analysis, document tagging, and content organisation, making BERTopic a powerful and cost-effective unsupervised learning tool in NLP.
 
-# Topic-Modelling-BERTopic_Political_speech_analysis
+## Project Summary
 
-FIRST COMMENT
-For the moment and for simplicity, only the Russian analysis would be taken into account. In the future, the other parties, will be taken into account. Also, just for future analysis, I will turn the Date column into an actual date format (current one in Object format).
+This project demonstrates how to apply BERTopic to political speech transcripts to extract meaningful topics and track their evolution over time. It covers data preprocessing, model building, topic visualisation, and interpretation of results.
 
-To do that, I will use the `pd.to_datetime()` function from the pandas library to convert the 'Date' column into a datetime format. This will allow for easier manipulation and analysis of the date data. Furthermore, I will manualy remove time from the date, as it is not needed for the analysis.
+### About the Dataset
 
-Second comment
+This project utilises the Empoliticon: Political Speeches – Context & Emotion dataset. Released under the Attribution 4.0 International License, this dataset forms part of the Efat et al. (2023) study and comprises 2,010 transcripts of political speeches delivered by presidents and prime ministers from the USA, UK, China, and Russia. To maintain focus and coherence, this initial version (MVP) concentrates on a subset of 556 speeches from Russian leaders. Future iterations aim to introduce an interactive dropdown feature alongside the Streamlit library to select speeches from other countries, thereby broadening the analysis scope.
 
-# Topic Generation
+## How to Use
 
-***To add to the README file:***  
+This project's methodology follows a structured approach, broken down into the following key stages:
 
-As written in the BERTopic’s documentation (make it a link - 'how to deal with topic outliers' https://maartengr.github.io/BERTopic/faq.html#how-do-i-reduce-topic-outliers ): Removing stop words as a preprocessing step is not advised as the transformer-based embedding models that we use need the full context to create accurate embeddings.
+1. **Data Preparation**  
+   - The textual corpus undergoes thorough cleansing and preprocessing.
+   - Timestamps are standardised to ensure consistency, facilitating robust temporal analysis.
 
-We use ```CountVectorizer``` in this case, only for the Bigram (and Trigram models in future improvements), as it is more suitable for these types of models. The ```CountVectorizer``` will be used to create a vocabulary of words that will be used to generate the topics. However, we will not use it to remove stop words, as it is not advised to do so. Instead, we will use the ```BERTopic``` model in combination with ```SentenceTransformer``` to generate the topics.
+2. **BERTopic Model Construction**  
+   - Pre-trained semantic embedding models, such as those available via the SentenceTransformer library, are leveraged to generate context-rich document embeddings.
+     - A comprehensive array of suitable models is accessible from both the [Sentence Transformers](https://www.sbert.net/docs/sentence_transformer/pretrained_models.html) website and the [Hugging Face model hub](https://huggingface.co/models), enabling their loading and utilisation with minimal code to encode textual sequences into high-dimensional numerical embeddings.
+     - For this project, the ```msmarco-distilbert-cos-v5``` model was specifically chosen due to its enhanced semantic capabilities, aiming for greater accuracy. This stage offers considerable flexibility, allowing for the testing and selection of various models to tailor the results to specific analytical objectives.
+   - Vectorizer parameters are carefully configured to optimise the distinctiveness of the generated topics.
+   - Dimensionality reduction techniques and clustering algorithms are subsequently applied.
 
-```BERTopic``` uses sentence transformer models as its first building block, converting sentences into dense vector representations (i.e. embeddings) that capture semantic meanings. These models are based on transformer architectures like BERT and are specifically trained to produce high-quality sentence embeddings. We then compute the semantic similarity between sentences using cosine distance between the embeddings. Common models include:
+3. **Topic Exploration**  
+   - Visualisations are employed to display top terms and exemplary documents associated with each identified topic.
+   - Analytical tools, including intertopic distance maps, heatmaps, and temporal topic trend visualisations, are utilised for deeper insights.
 
-- ***all-MiniLM-L6-v2:*** lightweight, fast, good general performance
-- ***BAAI/bge-base-en-v1.5:*** larger model with strong semantic understanding hence gives much slower training and inference speed.
-There are a massive range of pre-trained sentence transformers for you to choose from on the “Sentence Transformer - https://www.sbert.net/docs/sentence_transformer/pretrained_models.html” website and 'Huggingface model hub - https://huggingface.co/models'. 
-
-```Bertopic``` has a built-in parameter called ```n_gram_range``` to define the n-gram as well. Nevertheless, by using the `CountVectorizer` we can define the n-gram range more precisely and have more control (customization options) when fine-tuning the model. The `ngram_range` parameter in `CountVectorizer` allows us to specify the range of n-grams to be extracted from the text data. This is particularly useful for capturing phrases or combinations of words that may carry significant meaning in the context of the topics being analyzed.
-
-# For the n-Gram, Here is an clarification:
-
-## 📚 Understanding `ngram_range=(X, Y)` in `CountVectorizer`
-
-The `ngram_range` parameter controls **how many words the model looks at together** when converting text into tokens.
-
-> 🧠 It does **not** split text into “word + what follows.” Instead, it defines the **size of grouped word sequences (n-grams)**.
-
+4. **Results Interpretation**  
+   - Insights are derived from examining topic overlaps and identifying distinct thematic groupings.
+   - The evolution of topic prevalence over different years is rigorously analysed.
 ---
 
-### 💡 Breakdown
+## Key Visualisations
 
-| n-gram type | What it extracts                | Example (from `"climate change policy"`)            |
-|-------------|----------------------------------|-----------------------------------------------------|
-| `(1, 1)`    | Unigrams (single words)          | `"climate"`, `"change"`, `"policy"`                |
-| `(2, 2)`    | Bigrams (2-word phrases)         | `"climate change"`, `"change policy"`              |
-| `(3, 3)`    | Trigrams (3-word phrases)        | `"climate change policy"`                          |
-| `(1, 3)`    | All n-grams from 1 to 3 words    | `"climate"`, `"climate change"`, `"climate change policy"` |
+- **Term Visualisation:**
+The selected terms for individual topics can be visualised effectively through the generation of bar charts, which leverage the ```c-TF-IDF``` scores for each topic representation. This approach facilitates the acquisition of insights from the relative c-TF-IDF scores, both between and within topics. Furthermore, it enables a direct comparison of distinct topic representations.
 
----
+- **Intertopic Distance Map:**  
+  Visualises topic similarity and overlap in a 2D space, helping identify related topics.
 
-### ✅ Summary
+- **Topic Heatmap:**  
+  Shows topic similarity clusters with optional reordering for better readability.
 
-- **The first number** in the range = minimum number of words per phrase.
-- **The second number** = maximum number of words per phrase.
-- This is about **grouping neighbouring words**, not predicting what comes next.
+- **Topics Over Time:**  
+  Displays how frequently topics appear across specified time intervals, revealing trends.
 
-Thrid Comment
+Source: [BERTopic - Visualisations](https://maartengr.github.io/BERTopic/getting_started/visualization/visualization.html)
 
-Note that the ```nr_topics``` is set to 7 for generating 6 topics. The remaining topic is used to keep the outliers.
 
-On the other hand, after generating topics and their probabilities, we can access the frequent topics that were generated:
 
--1 refers to all outliers and should typically be ignored. Next, let's take a look at the most frequent topic that was generated, topic 0:
 
-Forth Comment - Explanation
 
-🔍 Understanding topic_model.get_topic(topic_id) in BERTopic
-The method topic_model.get_topic(topic_id) returns a ranked list of keywords (or keyphrases) associated with a given topic. For example:
 
-```bash
-topic_model.get_topic(0)
-```
 
-Will return output like:
 
-```bash
-[
-  ('state duma', 0.0058),
-  ('russian federation', 0.0047),
-  ('united russia', 0.0040),
-  ...
-]
-```
 
-📌 What this means:
-The first item ('state duma') has the highest probability and is considered the most representative term of the topic.
-
-The list is ranked by probability, showing how relevant each word is within that topic.
-
-These probabilities are based on class-based TF-IDF (c-TF-IDF) scores — a method used by BERTopic to identify terms that are uniquely important for a specific topic compared to the entire corpus.
-
-✅ Summary:
-Ranks terms by importance for a given topic.
-
-Probabilities reflect how strongly each term contributes to the topic.
-
-Useful for labelling or interpreting the semantic meaning of topics.
