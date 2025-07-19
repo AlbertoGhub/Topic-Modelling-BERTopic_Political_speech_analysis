@@ -102,11 +102,43 @@ The distribution of topic probabilities indicates BERTopic's confidence that spe
 
 ---
 
-## 🧾 Results Interpretation
+## 🧠 Topic Insights & Interpretation
 
-- Topics show semantic clarity and minimal overlap.
-- Time-based topic trends mirror historical political changes.
-- Hierarchical view reveals sub-topics and theme consolidation.
+### 📊 **Topic Word Scores**
+Each topic group together the most relevant keywords extracted from political speeches. Some key themes:
+
+- **Topic 0**: Chechnya and regional conflict (e.g. *chechnya*, *republic*, *caucasus*).
+- **Topic 1**: Military and security (*military*, *armed*, *defence*).
+- **Topic 2**: War narratives and national memory (*war*, *victory*, *veterans*).
+- **Topic 3**: Economy and business (*business*, *companies*, *investment*).
+- **Topic 4**: Political institutions (*duma*, *elections*, *united*).
+- **Topic 5**: Regional governance (*local*, *federal*, *regions*).
+- **Topic 6**: Public services and fiscal policy (*budget*, *tax*, *development*).
+- **Topic 7**: Geopolitical orientation (*region*, *far east*, *district*).
+
+This suggests the speeches cover a broad spectrum — from domestic governance to foreign affairs and national identity.
+
+### 🌐 **Hierarchical Clustering**
+The dendrogram reveals how topics cluster based on semantic similarity:
+
+- **Cluster 1**: Topics 0 (Chechnya) and 1 (Military) show a close relationship — indicating overlapping narratives around conflict and security.
+- **Cluster 2**: Topics 4 (Politics), 5 (Local governance), and 6 (Budget) are grouped — reflecting domestic administrative focus.
+- **Cluster 3**: Topics 3 (Business) and 7 (Geopolitics) cluster together, possibly highlighting economic development in regional contexts.
+- **Cluster 4**: Topic 2 (War) is relatively distinct but still shares some distance with broader nationalist themes.
+
+These patterns reveal how Russian political discourse intertwines themes of national identity, military strength, economic policy, and governance.
+
+### ⏳ Topics Over Time
+
+The chart below illustrates the evolution of the frequency of specific topics from 2000 to 2020.
+
+**Key Observations:**
+- 🟠 **Elections & Politics** (Topic 4) peaked around 2003–2005 and again in 2008–2010 — aligning with major electoral cycles.
+- 🟡 **Chechnya & Conflict** (Topic 0) was dominant in the early 2000s, reflecting heightened discourse around regional instability.
+- 🟢 **War & Memory** (Topic 2) shows a strong resurgence post-2005 and 2020 — possibly tied to commemorative anniversaries.
+- 🔵 **Military & Security** (Topic 1) and 🟢 **Business & Economy** (Topic 3) remained relatively steady, showing ongoing attention to defence and development.
+
+📌 **Insight**: Shifts in topic prominence reveal how national priorities and narratives have changed over time, often influenced by elections, anniversaries, and external events.
 
 ---
 
@@ -117,7 +149,7 @@ The distribution of topic probabilities indicates BERTopic's confidence that spe
 - Producing interpretable topic clusters.
 - Providing rich, interactive visualisations.
 
-This project serves as a solid template for applying BERTopic to political data—and can be extended to domains like finance, news, or customer feedback.
+This project serves as a solid template for applying BERTopic to political data and can be extended to domains like finance, news, or customer feedback.
 
 ---
 
