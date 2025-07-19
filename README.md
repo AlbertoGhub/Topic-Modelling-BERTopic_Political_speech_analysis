@@ -145,7 +145,7 @@ This project serves as a solid template for applying BERTopic to political data�
 ├── notebooks/
 ├── data/
 ├── images/
-├── scr/
+├── src/
      └── modules
 ├── README.md
 └── requirements.txt
