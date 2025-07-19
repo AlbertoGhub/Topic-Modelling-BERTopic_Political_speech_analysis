@@ -52,7 +52,8 @@ We utilise the "Empoliticon: Political Speeches – Context & Emotion" dataset b
 ### 📌 Term Representation per Topic
  Visualised using bar charts of `c-TF-IDF` scores.
 
-![Term Visualisation](../images/1_Barchart_topic_visualisation.html)
+
+[Term Visualisation](images/1_Barchart_topic_visualisation.html)
 
 ---
 
